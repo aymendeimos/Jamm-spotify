@@ -5,7 +5,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
-- [App Features] (#what-Jamm-spotify-provide)
+- [UpdaApp Features](#what-Jamm-spotify-provide)
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
