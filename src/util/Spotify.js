@@ -5,7 +5,7 @@ const clientId = 'c821d21bce4546deacc03df055f4ff8a';
 
 const spotifyPlaylistAPI = 'https://api.spotify.com/v1/users/${userId}/playlists';
 const spotifyPlaylistTracksAPI = 'https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks';
-const spotifyRedirectUrl = 'http://spotify-jamme.surge.sh/';
+const spotifyRedirectUrl = 'http://localhost:3000/';
 
 const spotifySearchAPI = 'https://api.spotify.com/v1/search';
 const spotifyUserProfileAPI = 'https://api.spotify.com/v1/me';
