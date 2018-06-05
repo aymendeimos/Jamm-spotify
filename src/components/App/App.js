@@ -32,6 +32,7 @@ class App extends Component {
       this.setState({
         playlistTracks : tempPlaylistTracks
       })
+      // remove from search results array what's in the playlist array
       let tempSearchResult = this.state.searchResults.filter((searchResultsTrack)=>{
         return searchResultsTrack.id !== track.id
       })
@@ -47,6 +48,12 @@ class App extends Component {
     })
     this.setState({
       playlistTracks : tempPlaylistTracks
+    })
+    //add what we removed from playlist at the top of search results
+    let tempSearchResult = this.state.searchResults;
+    tempSearchResult.unshift(track);
+    this.setState({
+        searchResults : tempSearchResult
     })
   }
 
