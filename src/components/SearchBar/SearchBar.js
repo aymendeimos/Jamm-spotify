@@ -9,40 +9,23 @@ class SearchBar extends React.Component{
         }
         this.search = this.search.bind(this);
         this.handleTermChange = this.handleTermChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     search(){
         this.props.onSearch(this.state.term);
-        
-        
     }
 
-    extract(string, keyword, limiter) {
-        let startIndex = string.indexOf(keyword);
-        if (startIndex !== -1) {
-            // add the length of the keyword to the start position to get the "real" start
-            startIndex += keyword.length;
-            let endIndex = string.indexOf(limiter, startIndex);
-            if (endIndex !== -1) {
-                return string.slice(startIndex, endIndex);
-            } else {
-                return string.slice(startIndex);
-            }
+    handleKeyPress(event) {
+        if(event.charCode==13){
+                this.search();
         }
-        return undefined;
-    }
-
-    handleTermChange(event){
-        let term = event.target.value;
-        this.setState({
-            term: term
-        })
     }
 
     render(){
         return(
             <div className="SearchBar">
-                <input placeholder="Enter A Song, Album, or Artist" onChange={this.handleTermChange} />
+                <input placeholder="Enter A Song, Album, or Artist" onChange={this.handleTermChange} onKeyPress={this.handleKeyPress}/>
                 <a onClick={this.search}>SEARCH</a>
             </div>
         )
