@@ -24,7 +24,7 @@ class SearchBar extends React.Component{
     }
 
     handleKeyPress(event) {
-        if(event.charCode==13){
+        if(event.charCode === 13){
                 this.search();
         }
     }
