@@ -64,14 +64,23 @@ class App extends Component {
   }
 
   savePlaylist(){
+    let progressBarContainer = document.getElementById('myProgress');
+    let progressBar = document.getElementById('myBar');
+    progressBarContainer.style.display = 'block';
+    progressBar.style.width = '85%' ;
+
     let trackURIs = this.state.playlistTracks.map(track => track.uri);
-        if (this.state.playlistName && trackURIs && trackURIs.length > 0) {
-			Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
-                
-				console.log(`new playlist with '${this.state.playlistName}' and ${trackURIs.length} songs successful saved.`);
-				this.setState({playlistName: 'New Playlist', playlistTracks: []});
-			});
-		}
+
+    if (this.state.playlistName && trackURIs && trackURIs.length > 0) {
+        Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+            console.log(`new playlist with '${this.state.playlistName}' and ${trackURIs.length} songs successful saved.`);
+            this.setState({playlistName: 'New Playlist', playlistTracks: [], searchResults:[]});
+        });
+    }
+
+    setTimeout(()=>{progressBar.style.width = '100%'}, 500);
+    setTimeout(()=>{progressBarContainer.style.display = 'none'}, 1000);
+    progressBar.style.width = '0';
   }
 
   search(term){
@@ -82,6 +91,9 @@ class App extends Component {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <div id="myProgress"> 
+            <div id="myBar"></div> 
+        </div>
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">

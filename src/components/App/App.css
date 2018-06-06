@@ -51,3 +51,16 @@ h2 {
     flex-direction: column;
   }
 }
+
+#myProgress {
+  display: none;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+}
+#myBar {
+  width: 1%;
+  height: 7px;
+  background-color: #6c41ec;
+  transition-duration : 1s;
+}
