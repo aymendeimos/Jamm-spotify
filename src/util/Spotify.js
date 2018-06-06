@@ -11,19 +11,44 @@ const spotifySearchAPI = 'https://api.spotify.com/v1/search';
 const spotifyUserProfileAPI = 'https://api.spotify.com/v1/me';
 
 const Spotify = {
+
     getAccessToken(){
+      
+        let localStorageAccessToken =  localStorage.getItem('accessToken');
+        
         // 1. case: already there?
-        if (accessToken) {
-            return accessToken;
-        }
-        // 2. case: already in URL?
+        if(localStorageAccessToken){
+
+            localStorageAccessToken = JSON.parse(localStorageAccessToken);
+
+            let now = (new Date()).getSeconds();
+            let accessTokenStartIn = (new Date(localStorageAccessToken.startIn)).getSeconds();
+            
+            if(localStorageAccessToken.expiresIn < (now - accessTokenStartIn)){
+                // expired
+                localStorage.removeItem('accessToken');
+                // get a new from the url
+                this.getAccessTokenFromAPI();
+            }else{
+                // still exist
+                return localStorageAccessToken.accessToken;
+            }
+        }else{
+            // no access token found
+            this.getAccessTokenFromAPI();
+        }  
+    },
+
+    getAccessTokenFromAPI(){
         let url = window.location.href;
         accessToken = this.extract(url, "access_token=", "&");
         if (accessToken) {
             expiresIn = this.extract(url, "expires_in=", "&");
-            window.setTimeout(() => accessToken = '', expiresIn * 1000);
-            window.history.pushState('Access Token', null, '/');
-            console.log("access token successful retrieved.");
+            localStorage.setItem('accessToken',JSON.stringify({
+                accessToken : accessToken,
+                expiresIn : expiresIn * 1000,
+                startIn: new Date()
+            }))
             return accessToken;
         } else {
             // 3. case: fetch from spotify
@@ -31,7 +56,7 @@ const Spotify = {
         }
     },
 
-    search(term) {
+    search(term) {   
         return fetch(`${spotifySearchAPI}?type=track&q=${term}`,{headers: this.buildAuthorizationHeader()})
             .then(response => response.json())
             .then(jsonResponse => {
