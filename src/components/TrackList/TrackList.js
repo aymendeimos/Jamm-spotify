@@ -13,9 +13,11 @@ class TrackList extends React.Component{
     }
     
     renderTracks(){
-        return this.props.trackList.map((track)=>{
-            return <Track onRemove={this.props.onRemove} isRemoval={this.props.isRemoval} onAdd={this.props.onAdd} key={'track_'+track.id} track={track}/>
-        })
+        if(this.props.trackList){
+            return this.props.trackList.map((track)=>{
+                return <Track onRemove={this.props.onRemove} isRemoval={this.props.isRemoval} onAdd={this.props.onAdd} key={'track_'+track.id} track={track}/>
+            })
+        }
     }
 
     render(){
